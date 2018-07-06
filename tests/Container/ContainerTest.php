@@ -4,6 +4,7 @@ use Analyze\Container\Container;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Tests\Utilities\FakeClass;
 use \Mockery as m;
 
 class ContainerTest extends MockeryTestCase
@@ -47,6 +48,55 @@ class ContainerTest extends MockeryTestCase
         });
 
         $this->assertTrue($container->has('classname'));
+    }
+
+    public function testFactoryDefinitionIsCalled()
+    {
+        $container = new Container;
+
+        $container->addFactory('classname', function () {
+            return true;
+        });
+
+        $this->assertTrue($container->get('classname'));
+    }
+
+    public function testFactoryDefinitionAddsArguments()
+    {
+        $container = new Container;
+
+        $container->addFactory('classname', function (string $name) {
+            return $name;
+        });
+
+        $this->assertEquals('Bob', $container->withArguments(['Bob'])->get('classname'));
+    }
+
+    public function testClassDefinitionIsSet()
+    {
+        $container = new Container;
+
+        $container->addClass('classname', 'My\Class\Name');
+
+        $this->assertTrue($container->has('classname'));
+    }
+
+    public function testClassDefinitionReturnsCorrectInstance()
+    {
+        $container = new Container;
+        $container->addClass('classname', 'stdClass');
+
+        $this->assertInstanceOf(stdClass::class, $container->get('classname'));
+    }
+
+    public function testClassDefinitionConstructor()
+    {
+        $container = new Container;
+        $container->addClass('classname', FakeClass::class);
+
+        $test = $container->withArguments(['Bob'])->get('classname');
+
+        $this->assertEquals('Bob', $test->name);
     }
 
     public function testGetThrowsCorrectException()

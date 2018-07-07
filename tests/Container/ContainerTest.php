@@ -99,6 +99,16 @@ class ContainerTest extends MockeryTestCase
         $this->assertEquals('Bob', $test->name);
     }
 
+    public function testNamespacedClassDefinitionConstructor()
+    {
+        $container = new Container;
+        $container->addClass('classname', 'Tests\Utilities\FakeClass');
+
+        $test = $container->withArguments(['Bob'])->get('classname');
+
+        $this->assertEquals('Bob', $test->name);
+    }
+
     public function testGetThrowsCorrectException()
     {
         $this->expectException(NotFoundExceptionInterface::class);

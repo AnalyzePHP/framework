@@ -10,5 +10,10 @@ namespace Analyze\Container\Definitions;
 
 interface DefinitionInterface
 {
+    /**
+     * Build
+     *
+     * @return object
+     */
     public function build();
 }

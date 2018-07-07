@@ -17,6 +17,10 @@ use Analyze\Container\Definitions\DefinitionInterface;
 
 class Container implements ContainerInterface
 {
+    /**
+     * Arguments
+     * @var array
+     */
     private $arguments = [];
 
     /**
@@ -53,6 +57,14 @@ class Container implements ContainerInterface
         $this->add($alias, $definition);
     }
 
+    /**
+     * Add Class
+     *
+     * Add a class to the container.
+     *
+     * @param string $alias
+     * @param string $concrete
+     */
     public function addClass(string $alias, string $concrete) : void
     {
         $definition = new ClassDefinition($concrete);
@@ -94,6 +106,14 @@ class Container implements ContainerInterface
         return array_key_exists($id, $this->definitions);
     }
 
+    /**
+     * With Arguments
+     *
+     * Pass arguments to a definition.
+     *
+     * @param  array $args
+     * @return self
+     */
     public function withArguments(array $args) : self
     {
         $this->arguments = $args;

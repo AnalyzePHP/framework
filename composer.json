@@ -1,7 +1,7 @@
 {
     "name": "analyzephp/framework",
     "description": "The Analyze PHP Framework",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {

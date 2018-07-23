@@ -21,6 +21,7 @@
         "mockery/mockery": "^1.0@dev"
     },
     "require": {
-        "psr/container": "^1.0@dev"
+        "psr/container": "^1.0@dev",
+        "analyzephp/container": "dev-master"
     }
 }
